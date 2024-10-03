@@ -1427,6 +1427,7 @@ input[type=submit] {
 /*Footer Section Starts Here*/
 footer {
   position: relative;
+  background:black;
 }
 
 .footer-top-shape {
