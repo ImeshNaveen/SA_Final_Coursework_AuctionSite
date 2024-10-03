@@ -2005,7 +2005,7 @@ header {
   transition: all ease 0.3s;
 }
 .header-bottom.active {
-  background: #693ff5;
+  background: #072781;
   position: fixed;
   top: 0;
   left: 0;
@@ -2138,6 +2138,7 @@ header {
   position: relative;
   padding: 220px 0 240px;
   overflow: hidden;
+  background:#072781;
 }
 @media (min-width: 992px) {
   .banner-section {
