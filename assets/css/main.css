@@ -994,7 +994,7 @@ input[type=submit] {
 }
 
 .ratings span {
-  color: #ff7800;
+  color: #ffc107;
 }
 
 .rtl {
@@ -1713,7 +1713,7 @@ footer {
   width: 40px;
   line-height: 40px;
   font-size: 20px;
-  color: #ffffff;
+  color:  #000000;
   background: #ffc107;
   height: 40px;
   border-radius: 50%;
@@ -1744,6 +1744,7 @@ footer {
   position: absolute;
   right: 0;
   top: 7px;
+  color:#000;
 }
 
 .header-top {
@@ -3360,7 +3361,7 @@ div[class*=auction] .custom-button {
   background: #ffffff;
 }
 .auction-item-3 .auction-thumb .bid i {
-  color: #43b055;
+  color: #ffc107;
 }
 .auction-item-3 .auction-thumb .rating {
   color: #ff7800;
@@ -6198,7 +6199,7 @@ div[class*=auction] .custom-button {
 }
 
 .rating i {
-  color: #ff7800;
+  color: #ffc107;
 }
 
 .custom-button.border {
