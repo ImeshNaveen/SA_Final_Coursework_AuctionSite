@@ -1140,7 +1140,7 @@ input[type=submit] {
 }
 .section-header .cate {
   display: block;
-  color: #3f22b3;
+  color: #ffc107;
   margin-bottom: 15px;
   font-family: "Roboto", sans-serif;
 }
@@ -1749,6 +1749,7 @@ footer {
 
 .header-top {
   border: 1px solid rgba(0, 0, 0, 0.502);
+  background: #000000;
 }
 
 header {
@@ -2006,6 +2007,7 @@ header {
 .header-bottom {
   padding: 20px 0;
   transition: all ease 0.3s;
+  background: #000000;
 }
 .header-bottom.active {
   background: #000000;
@@ -5387,7 +5389,7 @@ div[class*=auction] .custom-button {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: -webkit-linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
+  background: -webkit-linear-gradient(166deg, #ffc107 0%, #000 100%);
   box-shadow: 0px 3px 5px 0px rgba(162, 44, 202, 0.3);
   color: #ffffff;
   top: 15px;
@@ -7217,7 +7219,7 @@ button.custom-button {
   border: none;
   height: 60px;
   width: auto;
-  background: -webkit-linear-gradient(135deg, rgb(255, 99, 222) 0%, rgb(216, 67, 226) 44%, rgb(177, 34, 230) 100%);
+  background:  -webkit-linear-gradient(135deg, #ffc107 0%, #ffc107a6 44%, #000 100%);
   box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
 }
