@@ -7477,6 +7477,12 @@ img.footer_logo
   width:100px;
   height:100px;
 }
+img.main-icon
+{
+  width:auto;
+  height:auto;
+}
+
 
 
 /*All Animation Ends Here*//*# sourceMappingURL=main.css.map */
