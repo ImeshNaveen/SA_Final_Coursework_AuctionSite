@@ -1699,30 +1699,28 @@ footer {
 .header-top-wrapper .customer-support .select-bar .current {
   color: #ffffff;
 }
-.header-top-wrapper .customer-support .list li {
-  padding: 0 15px;
-}
-.header-top-wrapper .cart-button-area li {
+/* Adjustments for .cart-button-area and .menu */
+.header-bottom .cart-button-area li {
   padding: 4px 15px;
   text-align: center;
 }
-.header-top-wrapper .cart-button-area li:last-child {
+.header-bottom .cart-button-area li:last-child {
   padding-right: 0;
 }
-.header-top-wrapper .cart-button-area li .user-button {
+.header-bottom .cart-button-area li .user-button {
   width: 40px;
   line-height: 40px;
   font-size: 20px;
-  color:  #000000;
+  color: #000000;
   background: #ffc107;
   height: 40px;
   border-radius: 50%;
 }
-.header-top-wrapper .cart-button-area li .user-button.white {
+.header-bottom .cart-button-area li .user-button.white {
   background: #ffffff;
   color: #171d1c;
 }
-.header-top-wrapper .cart-button-area li .cart-button {
+.header-bottom .cart-button-area li .cart-button {
   width: 50px;
   line-height: 40px;
   font-size: 34px;
@@ -1730,10 +1728,10 @@ footer {
   height: 40px;
   position: relative;
 }
-.header-top-wrapper .cart-button-area li .cart-button a {
+.header-bottom .cart-button-area li .cart-button a {
   display: flex;
 }
-.header-top-wrapper .cart-button-area li .cart-button .amount {
+.header-bottom .cart-button-area li .cart-button .amount {
   border-radius: 50%;
   background: #ffc107;
   font-size: 12px;
@@ -1744,8 +1742,10 @@ footer {
   position: absolute;
   right: 0;
   top: 7px;
-  color:#000;
+  color: #000;
 }
+
+/* You can add any additional styles if needed for the logo or other parts of the header */
 
 .header-top {
   border: 1px solid rgba(0, 0, 0, 0.502);
