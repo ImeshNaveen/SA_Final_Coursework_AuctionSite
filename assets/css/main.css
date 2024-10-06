@@ -7472,6 +7472,11 @@ p.title_p
 {
   color:black;
 }
+img.footer_logo
+{
+  width:100px;
+  height:100px;
+}
 
 
 /*All Animation Ends Here*//*# sourceMappingURL=main.css.map */
