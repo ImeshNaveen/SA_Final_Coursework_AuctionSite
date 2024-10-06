@@ -514,7 +514,7 @@ p:last-child {
   margin-bottom: -7px !important;
 }
 p a {
-  color: #ee4730;
+  color: #ffc107;
 }
 p a:hover {
   color: #ee4730;
@@ -1651,7 +1651,7 @@ footer {
 }
 .social-icons li a:hover, .social-icons li a.active {
   color: #ffffff;
-  background: #ee4730;
+  background: #ffc107;
 }
 @media (max-width: 1199px) {
   .social-icons li a {
@@ -7134,7 +7134,7 @@ div[class*=auction] .custom-button {
   position: fixed;
   border-radius: 5px;
   transform: translateY(150px);
-  background: #693ff5;
+  background: #ffc107;
   text-align: center;
   font-size: 16px;
 }
