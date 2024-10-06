@@ -415,11 +415,11 @@ body {
   padding: 0;
   margin: 0;
   font-size: 16px;
-  color: #52606d;
+  color: #000000;
   line-height: 26px;
   overflow-x: hidden;
   font-family: "Open Sans", sans-serif;
-  background: #ffffff;
+  background: #000000;
 }
 
 h1,
@@ -956,7 +956,7 @@ input[type=submit] {
 }
 
 .body-bg {
-  background: #ffffff;
+  background: #000000;
 }
 
 .theme-bg {
@@ -1700,13 +1700,23 @@ footer {
   color: #ffffff;
 }
 /* Adjustments for .cart-button-area and .menu */
+.header-bottom .cart-button-area {
+  display: flex; /* Use flexbox to align items horizontally */
+  align-items: center; /* Vertically center the buttons */
+  gap: 15px; /* Adds space between the buttons */
+}
+
 .header-bottom .cart-button-area li {
   padding: 4px 15px;
   text-align: center;
+  list-style: none;
+  display: inline-block; /* Ensures the list items are inline */
 }
+
 .header-bottom .cart-button-area li:last-child {
   padding-right: 0;
 }
+
 .header-bottom .cart-button-area li .user-button {
   width: 40px;
   line-height: 40px;
@@ -1715,11 +1725,16 @@ footer {
   background: #ffc107;
   height: 40px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers the icon inside the circle */
 }
+
 .header-bottom .cart-button-area li .user-button.white {
   background: #ffffff;
   color: #171d1c;
 }
+
 .header-bottom .cart-button-area li .cart-button {
   width: 50px;
   line-height: 40px;
@@ -1727,10 +1742,11 @@ footer {
   color: #ffffff;
   height: 40px;
   position: relative;
-}
-.header-bottom .cart-button-area li .cart-button a {
   display: flex;
+  align-items: center;
+  justify-content: center; /* Ensures the icon is centered */
 }
+
 .header-bottom .cart-button-area li .cart-button .amount {
   border-radius: 50%;
   background: #ffc107;
@@ -1745,7 +1761,11 @@ footer {
   color: #000;
 }
 
-/* You can add any additional styles if needed for the logo or other parts of the header */
+/* Additional styles if needed for the header */
+.header-bottom .cart-button-area li .cart-button a {
+  display: flex;
+  align-items: center;
+}
 
 .header-top {
   border: 1px solid rgba(0, 0, 0, 0.502);
@@ -2022,7 +2042,7 @@ header {
 
 /*Cart Area Sidebar Starts*/
 .cart-sidebar-area {
-  background-color: #0a3d62;
+  background-color: #272727;
   max-width: 350px;
   width: 100%;
   height: 100vh;
@@ -2060,7 +2080,7 @@ header {
   top: 0px;
   display: inline-block;
   font-size: 16px;
-  color: #ee4730;
+  color: #ffc107;
   cursor: pointer;
 }
 .cart-sidebar-area .cart-products .title {
@@ -2110,8 +2130,8 @@ header {
 .cart-sidebar-area .single-product-item .content .remove-cart {
   display: inline-block;
   font-size: 10px;
-  color: #fff;
-  background-color: #ee4730;
+  color: #000000;
+  background-color: #ffc107;
   padding: 2px 18px;
   border-radius: 5px;
   text-transform: uppercase;
@@ -7180,7 +7200,7 @@ div[class*=auction] .custom-button {
   color: #3f22b3;
 }
 .custom-button.white:hover {
-  background: #3f22b3;
+  background: #000000;
   color: #ffffff;
 }
 .custom-button.active {
@@ -7369,8 +7389,8 @@ button.custom-button {
   transition: all 0.4s;
 }
 .normal-button:hover {
-  color: #ffffff;
-  background: -webkit-linear-gradient(90deg, rgb(61, 169, 245) 0%, rgb(104, 61, 245) 100%);
+  color: #000;
+  background: #ffc107;
   box-shadow: -1.04px 4.891px 20px 0px rgba(69, 49, 183, 0.5);
 }
 
