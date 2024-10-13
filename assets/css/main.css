@@ -419,7 +419,7 @@ body {
   line-height: 26px;
   overflow-x: hidden;
   font-family: "Open Sans", sans-serif;
-  background: #000000;
+  background: #ffffff;
 }
 
 h1,
@@ -5276,7 +5276,7 @@ div[class*=auction] .custom-button {
   width: calc(100% - 350px);
 }
 .account-wrapper .right-side {
-  background: -webkit-linear-gradient(90deg, rgb(81, 64, 254) 0%, rgb(119, 87, 247) 56%, rgb(157, 110, 240) 100%);
+  background:-webkit-linear-gradient(90deg, #ffc107 0%, #52606d 56%, #000 100%);
   justify-content: center;
   align-items: center;
   width: 350px;
@@ -5985,7 +5985,7 @@ div[class*=auction] .custom-button {
 }
 .det-nav:hover, .det-nav.active {
   color: #ffffff;
-  background: -webkit-linear-gradient(7deg, rgb(236, 19, 121) 0%, rgb(108, 0, 146) 100%);
+  background: -webkit-linear-gradient(7deg, #ffc107 0%, #212529 100%);
   box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
 }
 
@@ -7486,7 +7486,7 @@ button.custom-button {
   font-size: 16px;
 }
 h3.title{
-  color:black;
+  color:white;
 }
 p.title_p
 {
@@ -7501,6 +7501,10 @@ img.main-icon
 {
   width:auto;
   height:auto;
+}
+populer-title
+{
+ color:black;
 }
 
 
