@@ -5409,7 +5409,7 @@ div[class*=auction] .custom-button {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: -webkit-linear-gradient(166deg, #ffc107 0%, #000 100%);
+  background: #ffc107;
   box-shadow: 0px 3px 5px 0px rgba(162, 44, 202, 0.3);
   color: #ffffff;
   top: 15px;
@@ -7178,17 +7178,22 @@ div[class*=auction] .custom-button {
   text-transform: uppercase;
   padding: 12px 30px 10px;
   font-size: 18px;
-  background: -webkit-linear-gradient(92deg, #ffc107 0%, #ffc107 100%);
+  background-color: #ffc107 !important; /* Ensure solid color */
+  background-image: none !important;    /* Remove any gradient */
   box-shadow: -1.04px 4.891px 20px 0px #2e2e33a6;
   font-family: "Roboto", sans-serif;
   transition: all 0.4s;
 }
+
 .custom-button:hover {
-  color: #ffffff;
-  background: -webkit-linear-gradient(90deg,#00000061 0%,#ffc107 100%);
+  color: #ffffff !important;
+  background-color: #000000 !important; /* Make sure hover background color applies */
+  background-image: none !important;    /* Ensure no gradient on hover */
   box-shadow: -1.04px 4.891px 20px 0px rgba(73, 43, 245, 0.5);
-  
 }
+
+
+
 @media (max-width: 575px) {
   .custom-button {
     padding: 15px 30px 10px;
@@ -7210,13 +7215,13 @@ div[class*=auction] .custom-button {
   box-shadow: none;
 }
 .custom-button.active:hover {
-  background: -webkit-linear-gradient(90deg, rgb(61, 169, 245) 0%, rgb(104, 61, 245) 100%);
+  background: #000000;
   box-shadow: -1.04px 4.891px 20px 0px rgba(69, 49, 183, 0.5);
   border-color: #ee4730;
   color: #ffffff;
 }
 .custom-button.yellow {
-  background: -webkit-linear-gradient(92deg, #ffc107 0%, #ffc107 100%);;
+  background: #ffc107;
   box-shadow: 0px 19px 56px 0px rgba(0, 0, 0, 0.2);
 }
 @media (min-width: 576px) {
