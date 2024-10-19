@@ -194,7 +194,7 @@
                     <div class="or">
                         <span>Or</span>
                     </div>
-                    <form class="login-form">
+                    <form class="login-form" id="login-form">
                         <div class="form-group mb-30">
                             <label for="login-email"><i class="far fa-envelope"></i></label>
                             <input type="text" id="login-email" placeholder="Email Address">
@@ -208,7 +208,7 @@
                             <input type="checkbox" name="terms" id="check"><label for="check">The Sbidu Terms of Use apply</label>
                         </div>
                         <div class="form-group mb-0">
-                            <button type="submit" class="custom-button">LOG IN</button>
+                            <button type="submit" class="custom-button">Sign Up</button>
                         </div>
                     </form>
                 </div>
@@ -418,6 +418,28 @@
     </footer>
     <!--============= Footer Section Ends Here =============-->
 
+    <script>
+
+        document.getElementById('login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const response = await fetch('https://localhost:7159/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: document.getElementById('login-email').value,
+                    password: document.getElementById('login-pass').value,
+                })
+            });
+
+            if (response.status == 200) {
+                console.log('User registered successfully');
+            } else {
+                const data = await response.json();
+                alert(data);
+            }
+        });
+
+    </script>
 
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
@@ -435,6 +457,8 @@
     <script src="assets/js/yscountdown.min.js"></script>
     <script src="assets/js/jquery-ui.min.js"></script>
     <script src="./assets/js/main.js"></script>
+
+
 </body>
 
 </html>
