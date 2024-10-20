@@ -205,7 +205,7 @@
                             <a href="#0">Forgot Password?</a>
                         </div>
                         <div class="form-group mb-0">
-                            <button type="button" class="custom-button" onclick="location.href='profile.html'">LOG IN</button>
+                            <button type="submit" class="custom-button" >LOG IN</button>
                         </div>
                         
                     </form>
@@ -369,26 +369,36 @@
     <!--============= Footer Section Ends Here =============-->
 
     <script>
-
-        document.getElementById('login-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const response = await fetch('https://localhost:7159/login', {
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-pass').value;
+    
+            // Send login request to the API
+            fetch('https://localhost:7159/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: document.getElementById('login-email').value,
-                    password: document.getElementById('login-pass').value,
-                })
-            });
-
-            if (response.status == 200) {
-                console.log('User login successfully');
-            } else {
-                const data = await response.json();
-                alert(data);
-            }
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password }) 
+            })
+            .then(response => response.json().then(data => ({ status: response.status, body: data }))) 
+            .then(({ status, body }) => {
+                console.log('Response status:', status); 
+                console.log('Response body:', body); 
+    
+                // Check for successful status and accessToken
+                if (status === 200 && body.accessToken) { 
+                    // Store the access token in localStorage for use in authenticated requests
+                    localStorage.setItem('jwtToken', body.accessToken);
+                    console.log('Logged in successfully!');
+                } else {
+                    console.error('Login failed: No accessToken found in response or status not OK', body);
+                }
+            })
+            .catch(error => console.error('Error during login:', error));
         });
-
     </script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
