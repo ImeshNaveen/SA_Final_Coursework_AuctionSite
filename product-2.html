@@ -245,7 +245,7 @@
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
-                    <div class="row mb-30-none justify-content-center">
+                    <div class="row mb-30-none justify-content-center" id="auctionList">
                         <div class="col-sm-10 col-md-6">
                             <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
                                 <div class="auction-thumb">
@@ -674,7 +674,93 @@
     </footer>
     <!--============= Footer Section Ends Here =============-->
 
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Retrieve your JWT token from localStorage
+            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored here
+    
+            // Check if the token exists
+            if (!token) {
+                console.error('No JWT token found. Please log in first.');
+                return; // Exit the function if no token is available
+            }
+    
+            // Fetch auctions from the backend API with Authorization header
+            fetch("https://localhost:7159/api/Auction", {
+                method: "GET",
+                headers: {
+                   "Authorization": `Bearer ${token}`,  // Use backticks for template literals
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => {
+                // Check if the response is ok (status code 200-299)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json(); // Parse the response data as JSON
+            })
+            .then(auctions => {
+                const auctionList = document.getElementById("auctionList");
+    
+                // Clear any existing content
+                auctionList.innerHTML = "";
+    
+                // Loop through the auctions data and create HTML elements
+                auctions.forEach(auction => {
+                    const auctionItem = `
+                    <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
+                                <div class="auction-thumb">
+                                    <a href="./product-details.html"><img src="./assets/images/auction/product/10.png" alt="product"></a>
+                                    <a href="#0" class="rating"><i class="far fa-star"></i></a>
+                                    <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
+                                </div>
+                                <div class="auction-content">
+                                    <h6 class="title">
+                                        <a href="#0">${auction.title}</a>
+                                    </h6>
+                                    <div class="bid-area">
+                                        <div class="bid-amount">
+                                            <div class="icon">
+                                                <i class="flaticon-auction"></i>
+                                            </div>
+                                            <div class="amount-content">
+                                                <div class="current">Current Bid</div>
+                                                <div class="amount">$876.00</div>
+                                            </div>
+                                        </div>
+                                        <div class="bid-amount">
+                                            <div class="icon">
+                                                <i class="flaticon-money"></i>
+                                            </div>
+                                            <div class="amount-content">
+                                                <div class="current">Buy Now</div>
+                                                <div class="amount">$5,00.00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="countdown-area">
+                                        <div class="countdown">
+                                            <div id="bid_counter10"></div>
+                                        </div>
+                                        <span class="total-bids">30 Bids</span>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="#0" class="custom-button">Submit a bid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    
+                    // Append the created auction item to the auctionList container
+                    auctionList.innerHTML += auctionItem;
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching auctions:', error);
+            });
+        });
+    </script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
     <script src="./assets/js/modernizr-3.6.0.min.js"></script>
