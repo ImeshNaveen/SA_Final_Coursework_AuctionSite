@@ -46,13 +46,13 @@
                     </div>
                     <ul class="menu ml-auto">
                         <li>
-                            <a href="#0">Home</a>
+                            <a href="./index.html">Home</a>
                         </li>
                         <li>
-                            <a href="./product.html">Auction</a>
+                            <a href="./product-2.html">Auction</a>
                         </li>
                         <li>
-                            <a href="#0">All products</a>
+                            <a href="./product-2.html">All products</a>
                         </li>
                         <li>
                             <a href="./contact.html">Contact</a>
@@ -276,11 +276,11 @@
                             </li>
                         </ul>
                         <div class="product-bid-area">
-                            <form class="product-bid-form">
+                            <form class="product-bid-form" id="bid-form">
                                 <div class="search-icon">
                                     <img src="./assets/images/product/search-icon.png" alt="product">
                                 </div>
-                                <input type="text" placeholder="Enter you bid amount">
+                                <input type="text" id="bid-amount" placeholder="Enter you bid amount">
                                 <button type="submit" class="custom-button">Submit a bid</button>
                             </form>
                         </div>
@@ -869,7 +869,51 @@
     </footer>
     <!--============= Footer Section Ends Here =============-->
 
+    <script>
 
+        document.getElementById('bid-form').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent default form submission
+
+            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored here
+
+            if (!token) {
+                console.error('No JWT token found. Please log in first.');
+                return; // Exit the function if no token is available
+            }
+
+            // Get bid amount entered by the user
+            const bidAmount = document.getElementById('bid-amount').value;
+
+            // Collect auctionId from the URL (as shown above)
+            const urlParams = new URLSearchParams(window.location.search);
+            const auctionId = urlParams.get('auctionId');  // Extract auctionId from URL
+
+            // Create the request data
+            const requestData = {
+                auctionId: parseInt(auctionId),  // Use the auctionId from URL
+                status: "active",  // You can set status or modify based on your logic
+                bidAmount: parseFloat(bidAmount)  // Get the user's bid amount
+            };
+
+            // Send the request to the API
+            fetch('https://localhost:7159/api/Bid/create', {
+                method: 'POST',  // Or PUT if that's appropriate
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`  // If authentication is needed
+                },
+                body: JSON.stringify(requestData)  // Send the requestData object as JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response from API:', data);  // Handle the API response
+            })
+            .catch(error => {
+                console.error('Error:', error);  // Handle any errors
+            });
+        });
+
+    </script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
     <script src="./assets/js/modernizr-3.6.0.min.js"></script>
