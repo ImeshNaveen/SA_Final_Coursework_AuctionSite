@@ -712,13 +712,13 @@
                     const auctionItem = `
                     <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
                                 <div class="auction-thumb">
-                                    <a href="./product-details.html?auctionId=${auction.auctionId}"><img src="./assets/images/auction/product/10.png" alt="product"></a>
+                                    <a href="./product-details.html?auctionId=${auction.auctionId}"><img src="${auction.auctionImage}" alt="product"></a>
                                     <a href="#0" class="rating"><i class="far fa-star"></i></a>
                                     <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
                                 </div>
                                 <div class="auction-content">
                                     <h6 class="title">
-                                        <a href="#0">${auction.title},${auction.auctionId}</a>
+                                        <a href="#0">${auction.title}</a>
                                     </h6>
                                     <div class="bid-area">
                                         <div class="bid-amount">

@@ -177,94 +177,23 @@
     <!--============= Product Details Section Starts Here =============-->
     <section class="product-details padding-bottom mt--240 mt-lg--440">
         <div class="container">
-            <div class="product-details-slider-top-wrapper">
-                <div class="product-details-slider owl-theme owl-carousel" id="sync1">
-                    <div class="slide-top-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/product1.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-top-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/product2.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-top-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/product3.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-top-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/product4.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-top-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/product5.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-top-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/product6.png" alt="product">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-details-slider-wrapper">
-                <div class="product-bottom-slider owl-theme owl-carousel" id="sync2">
-                    <div class="slide-bottom-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/01.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-bottom-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/02.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-bottom-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/03.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-bottom-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/04.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-bottom-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/05.png" alt="product">
-                        </div>
-                    </div>
-                    <div class="slide-bottom-item">
-                        <div class="slide-inner">
-                            <img src="./assets/images/product/06.png" alt="product">
-                        </div>
-                    </div>
-                </div>
-                <span class="det-prev det-nav">
-                    <i class="fas fa-angle-left"></i>
-                </span>
-                <span class="det-next det-nav active">
-                    <i class="fas fa-angle-right"></i>
-                </span>
-            </div>
+
+            <img id="auction-image" src="" style="width: 1200px; height: 800px;">
+
             <div class="row mt-40-60-80">
                 <div class="col-lg-8">
                     <div class="product-details-content">
                         <div class="product-details-header">
-                            <h2 class="title">The Breeze Zodiac IX</h2>
+                            <h2 class="title" id="auction-title">The Breeze Zodiac IX</h2>
                             <ul>
-                                <li>Listing ID: 14076242</li>
+                                <li id="auction-description">Listing ID: 14076242</li>
                                 <li>Item #: 7300-3356862</li>
                             </ul>
                         </div>
                         <ul class="price-table mb-30">
                             <li class="header">
-                                <h5 class="current">Current Price</h5>
-                                <h3 class="price">US $700.00</h3>
+                                <h5 class="current">Starting Price</h5>
+                                <h3 class="price" id="start-price" >US $700.00</h3>
                             </li>
                             <li>
                                 <span class="details">Buyer's Premium</span>
@@ -870,49 +799,76 @@
     <!--============= Footer Section Ends Here =============-->
 
     <script>
-
-        document.getElementById('bid-form').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent default form submission
-
-            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored here
-
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored in localStorage
+    
             if (!token) {
                 console.error('No JWT token found. Please log in first.');
-                return; // Exit the function if no token is available
+                return; // Exit if no token is available
             }
-
-            // Get bid amount entered by the user
-            const bidAmount = document.getElementById('bid-amount').value;
-
-            // Collect auctionId from the URL (as shown above)
+    
+            // Get auctionId from URL
             const urlParams = new URLSearchParams(window.location.search);
-            const auctionId = urlParams.get('auctionId');  // Extract auctionId from URL
-
-            // Create the request data
-            const requestData = {
-                auctionId: parseInt(auctionId),  // Use the auctionId from URL
-                status: "active",  // You can set status or modify based on your logic
-                bidAmount: parseFloat(bidAmount)  // Get the user's bid amount
-            };
-
-            // Send the request to the API
-            fetch('https://localhost:7159/api/Bid/create', {
-                method: 'POST',  // Or PUT if that's appropriate
+            const auctionId = urlParams.get('auctionId');
+    
+            if (!auctionId) {
+                console.error('No auctionId found in the URL.');
+                return; // Exit if no auctionId is found
+            }
+    
+            // Fetch auction details from the API
+            fetch(`https://localhost:7159/api/Auction/${auctionId}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`  // If authentication is needed
-                },
-                body: JSON.stringify(requestData)  // Send the requestData object as JSON
+                    'Authorization': `Bearer ${token}`  // Include the token for authentication
+                }
             })
             .then(response => response.json())
-            .then(data => {
-                console.log('Response from API:', data);  // Handle the API response
+            .then(auctionData => {
+                // Populate the page with auction details
+                document.getElementById('auction-title').textContent = auctionData.title;
+                document.getElementById('auction-description').textContent = auctionData.description;
+                document.getElementById('auction-image').src = auctionData.auctionImage;
+                document.getElementById('start-price').src = auctionData.startingBid;
+
+                console.log('Auction details:', auctionData);
             })
             .catch(error => {
-                console.error('Error:', error);  // Handle any errors
+                console.error('Error fetching auction details:', error);
+            });
+    
+            // Handle the form submission for bidding
+            document.getElementById('bid-form').addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent default form submission
+    
+                const bidAmount = document.getElementById('bid-amount').value;
+    
+                // Create the request data for bidding
+                const requestData = {
+                    auctionId: parseInt(auctionId),  // Use the auctionId from URL
+                    status: "active",  // You can set status or modify based on your logic
+                    bidAmount: parseFloat(bidAmount)  // Get the user's bid amount
+                };
+    
+                // Send the bid request to the API
+                fetch('https://localhost:7159/api/Bid/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`  // Include the token for authentication
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Bid submitted successfully:', data);  // Handle the API response
+                })
+                .catch(error => {
+                    console.error('Error submitting bid:', error);  // Handle any errors
+                });
             });
         });
-
     </script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
