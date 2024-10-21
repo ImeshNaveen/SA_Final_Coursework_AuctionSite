@@ -74,22 +74,10 @@
             margin-bottom: 10px;
         }
     </style>
-
 </head>
 
 <body>
-    <!--============= ScrollToTop Section Starts Here =============-->
-    <div class="overlayer" id="overlayer">
-        <div class="loader">
-            <div class="loader-inner"></div>
-        </div>
-    </div>
-    <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
-    <div class="overlay"></div>
-    <!--============= ScrollToTop Section Ends Here =============-->
-
-
-    <!--============= Header Section Starts Here =============-->
+    <!--============= Header Section =============-->
     <header>
         <div class="header-bottom">
             <div class="container">
@@ -134,15 +122,10 @@
             </div>
         </div>
     </header>
-    <!--============= Header Section Ends Here =============-->
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br><br>
     <div class="form-container">
         <h2>Add Auction</h2>
-        <form action="/submit-auction" method="POST" enctype="multipart/form-data">
+        <form id="ad-form" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Auction Title:</label>
                 <input type="text" id="title" name="title" required>
@@ -157,36 +140,94 @@
             </div>
             <div class="form-group">
                 <label for="due_date">Due Date:</label>
-                <input type="date" id="Due_date" name="due_date" required>
+                <input type="date" id="due_date" name="due_date" required>
             </div>
             <div class="form-group">
                 <label for="image">Upload Images:</label>
                 <input type="file" id="image" name="image" class="i1" accept="image/*" required>
-                <input type="file" id="image" name="image" class="i1" accept="image/*" required>
-                <input type="file" id="image" name="image" class="i1" accept="image/*" required>
-                <input type="file" id="image" name="image" class="i1" accept="image/*" required>
             </div>
             <div class="form-group">
-                <button type="submit">Add Auction</button>
+                <input type="submit" value="Create Auction">
             </div>
         </form>
     </div>
 
+    <script src="./assets/js/jquery-3.3.1.min.js"></script>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
-    <script src="./assets/js/modernizr-3.6.0.min.js"></script>
-    <script src="./assets/js/plugins.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <script src="./assets/js/isotope.pkgd.min.js"></script>
-    <script src="./assets/js/aos.js"></script>
-    <script src="./assets/js/wow.min.js"></script>
-    <script src="./assets/js/waypoints.js"></script>
-    <script src="./assets/js/nice-select.js"></script>
-    <script src="./assets/js/counterup.min.js"></script>
-    <script src="./assets/js/owl.min.js"></script>
-    <script src="./assets/js/magnific-popup.min.js"></script>
-    <script src="assets/js/yscountdown.min.js"></script>
-    <script src="assets/js/jquery-ui.min.js"></script>
+    <script>
+        // Ensure the DOM is fully loaded before executing any script
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('ad-form').addEventListener('submit', async function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Get the token from local storage
+                const token = localStorage.getItem('jwtToken');
+                if (!token) {
+                    alert('No authentication token found. Please log in.');
+                    return;
+                }
+
+                // Gather form data
+                const formData = new FormData();
+                const imageElement = document.getElementById('image');
+                if (!imageElement || !imageElement.files[0]) {
+                    alert('Please upload an image.');
+                    return;
+                }
+
+                formData.append('file', imageElement.files[0]); // Image file
+
+                try {
+                    // First: Upload the image
+                    const imageUploadResponse = await fetch('https://localhost:7159/api/Image', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!imageUploadResponse.ok) {
+                        throw new Error('Image upload failed');
+                    }
+
+                    const imageUrl = await imageUploadResponse.text(); // The image URL from the server
+
+                    // Now create the auction with the image URL
+                    const auctionData = {
+                        title: document.getElementById('title').value,
+                        description: document.getElementById('description').value,
+                        auctionImage: imageUrl,  // Include the uploaded image URL
+                        sellerId: 0,
+                        winnerId: 0,
+                        startTime: "2024-10-21T18:25:32.262Z",
+                        endTime: document.getElementById('due_date').value,
+                        auctionCategory: "string",
+                        startingBid: document.getElementById('starting_price').value,
+                        winningBid: 0,
+                        status: "pending"
+                    };
+
+                    const auctionCreateResponse = await fetch('https://localhost:7159/api/Auction/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`  // Pass the token from localStorage
+                        },
+                        body: JSON.stringify(auctionData)
+                    });
+
+                    if (!auctionCreateResponse.ok) {
+                        throw new Error('Auction creation failed');
+                    }
+
+                    const auction = await auctionCreateResponse.json();
+                    alert('Auction created successfully!');
+                    console.log('Auction:', auction);
+                } catch (error) {
+                    alert('Error: ' + error.message);
+                }
+            });
+        });
+    </script>
+
     <script src="./assets/js/main.js"></script>
 </body>
 
