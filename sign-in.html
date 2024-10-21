@@ -394,8 +394,10 @@
                     localStorage.setItem('jwtToken', body.accessToken);
                     console.log('Logged in successfully!');
                     alert("You are successfully Logged in");
+                    window.location.href = 'profile.html';
                 } else {
                     console.error('Login failed: No accessToken found in response or status not OK', body);
+                    alert("Login failed, please check your credentials.");
                 }
             })
             .catch(error => console.error('Error during login:', error));

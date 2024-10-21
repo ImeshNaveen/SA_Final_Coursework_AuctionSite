@@ -264,7 +264,7 @@
                                 <ul class="dash-pro-body">
                                     <li>
                                         <div class="info-name">Email</div>
-                                        <div class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="71101d1314030542454831161c10181d5f121e1c">[email&#160;protected]</a></div>
+                                        <div class="info-value" id="u-email"></div>
                                     </li>
                                 </ul>
                             </div>
@@ -449,6 +449,27 @@
         </div>
     </footer>
     <!--============= Footer Section Ends Here =============-->
+
+    <script>
+        // Fetch data from the API
+        fetch('https://localhost:7159/manage/info', {  // Replace with your API URL
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer your_token_here`  // Replace with your actual token if needed
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Extract the email from the JSON response
+            const email = data.email;
+            // Display the email in the frontend
+            document.getElementById('u-email').textContent = email;
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    </script>
 
 
 
