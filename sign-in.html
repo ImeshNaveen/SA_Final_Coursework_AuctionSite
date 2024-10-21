@@ -393,6 +393,7 @@
                     // Store the access token in localStorage for use in authenticated requests
                     localStorage.setItem('jwtToken', body.accessToken);
                     console.log('Logged in successfully!');
+                    alert("You are successfully Logged in");
                 } else {
                     console.error('Login failed: No accessToken found in response or status not OK', body);
                 }
