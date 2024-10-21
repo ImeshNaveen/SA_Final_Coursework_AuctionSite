@@ -830,46 +830,55 @@
                 document.getElementById('auction-title').textContent = auctionData.title;
                 document.getElementById('auction-description').textContent = auctionData.description;
                 document.getElementById('auction-image').src = auctionData.auctionImage;
-                document.getElementById('start-price').src = auctionData.startingBid;
-
+                document.getElementById('start-price').textContent = auctionData.startingBid;
+    
                 console.log('Auction details:', auctionData);
+    
+                // Handle the form submission for bidding
+                document.getElementById('bid-form').addEventListener('submit', function(event) {
+                    event.preventDefault();  // Prevent default form submission
+    
+                    const bidAmount = parseFloat(document.getElementById('bid-amount').value);
+    
+                    // Check if bidAmount is greater than the starting bid
+                    if (bidAmount <= auctionData.startingBid) {
+                        alert('Your bid must be greater than the starting bid of ' + auctionData.startingBid);
+                        return; // Exit if bid is too low
+                    }
+    
+                    // Create the request data for bidding
+                    const requestData = {
+                        auctionId: parseInt(auctionId),  // Use the auctionId from URL
+                        status: "active",  // You can set status or modify based on your logic
+                        bidAmount: bidAmount  // Get the user's bid amount
+                    };
+    
+                    // Send the bid request to the API
+                    fetch('https://localhost:7159/api/Bid/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`  // Include the token for authentication
+                        },
+                        body: JSON.stringify(requestData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Bid submitted successfully:', data);  // Handle the API response
+                        toastr.success('Operation successful!');
+
+                    })
+                    .catch(error => {
+                        console.error('Error submitting bid:', error);  // Handle any errors
+                    });
+                });
             })
             .catch(error => {
                 console.error('Error fetching auction details:', error);
             });
-    
-            // Handle the form submission for bidding
-            document.getElementById('bid-form').addEventListener('submit', function(event) {
-                event.preventDefault();  // Prevent default form submission
-    
-                const bidAmount = document.getElementById('bid-amount').value;
-    
-                // Create the request data for bidding
-                const requestData = {
-                    auctionId: parseInt(auctionId),  // Use the auctionId from URL
-                    status: "active",  // You can set status or modify based on your logic
-                    bidAmount: parseFloat(bidAmount)  // Get the user's bid amount
-                };
-    
-                // Send the bid request to the API
-                fetch('https://localhost:7159/api/Bid/create', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`  // Include the token for authentication
-                    },
-                    body: JSON.stringify(requestData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Bid submitted successfully:', data);  // Handle the API response
-                })
-                .catch(error => {
-                    console.error('Error submitting bid:', error);  // Handle any errors
-                });
-            });
         });
     </script>
+    
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
     <script src="./assets/js/modernizr-3.6.0.min.js"></script>
