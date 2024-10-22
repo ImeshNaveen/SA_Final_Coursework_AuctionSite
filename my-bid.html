@@ -231,15 +231,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="upcoming">
                             <div class="row mb-30-none justify-content-center" id="my-auction">
-                                <div class="col-sm-10 col-md-6">
-
-
-                                    
-
-
-
-
-                                </div>
+                               
                                 
                                 
                             </div>
@@ -575,9 +567,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        const token = localStorage.getItem('jwtToken'); // Get the JWT token from local storage
-
-        if (token) {
+            const token = localStorage.getItem('jwtToken'); // Get the JWT token from local storage
+    
+            if (token) {
                 fetch('https://localhost:7159/api/Auction/user-auctions', {
                     method: 'GET',
                     headers: {
@@ -598,66 +590,69 @@
                 console.error('User not logged in or token missing');
             }
         });
-
+    
         function displayAuctions(auctions) {
-        const auctionContainer = document.getElementById('my-auction'); // Container where auctions will be shown
-
-        if (auctions.length === 0) {
-            auctionContainer.innerHTML = '<p>No auctions found for the current user.</p>';
-            return;
-        }
-
-        auctions.forEach(auction => {
-            const auctionItem = `
-                <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
-                                        <div class="auction-thumb">
-                                            <a <a href="./product-details.html?auctionId=${auction.auctionId}"><img src="${auction.auctionImage}" alt="car"></a>
-                                            <a href="#0" class="rating"><i class="far fa-star"></i></a>
-                                            <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
+            const auctionContainer = document.getElementById('my-auction'); // Container where auctions will be shown
+    
+            if (auctions.length === 0) {
+                auctionContainer.innerHTML = '<p>No auctions found for the current user.</p>';
+                return;
+            }
+    
+            auctions.forEach(auction => {
+                const auctionItem = `
+                    <div class="col-sm-10 col-md-6">
+                        <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1000">
+                            <div class="auction-thumb">
+                                <a href="./product-details.html?auctionId=${auction.auctionId}">
+                                    <img src="${auction.auctionImage}" alt="product">
+                                </a>
+                                <a href="#0" class="rating"><i class="far fa-star"></i></a>
+                                <a href="#0" class="bid"><i class="flaticon-auction"></i></a>
+                            </div>
+                            <div class="auction-content">
+                                <h6 class="title">
+                                    <a href="#0">${auction.title}</a>
+                                </h6>
+                                <div class="bid-area">
+                                    <div class="bid-amount">
+                                        <div class="icon">
+                                            <i class="flaticon-auction"></i>
                                         </div>
-                                        <div class="auction-content">
-                                            <h6 class="title">
-                                                <a href="#0">${auction.title}</a>
-                                            </h6>
-                                            <div class="bid-area">
-                                                <div class="bid-amount">
-                                                    <div class="icon">
-                                                        <i class="flaticon-auction"></i>
-                                                    </div>
-                                                    <div class="amount-content">
-                                                        <div class="current">Starting Bid</div>
-                                                        <div class="amount"> $${auction.startingBid}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="bid-amount">
-                                                    <div class="icon">
-                                                        <i class="flaticon-money"></i>
-                                                    </div>
-                                                    <div class="amount-content">
-                                                        <div class="current">Status</div>
-                                                        <div class="amount">${auction.status}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="countdown-area">
-                                                <div class="countdown">
-                                                    <div id="bid_counter27"></div>
-                                                </div>
-                                                <span class="total-bids">30 Bids</span>
-                                            </div>
-                                            <div class="text-center">
-                                                <a href="#0" class="custom-button">Submit a bid</a>
-                                            </div>
+                                        <div class="amount-content">
+                                            <div class="current">Starting Bid</div>
+                                            <div class="amount">$${auction.startingBid}</div>
                                         </div>
                                     </div>
-            `;
-
-            auctionContainer.innerHTML += auctionItem;
-        });
+                                    <div class="bid-amount">
+                                        <div class="icon">
+                                            <i class="flaticon-money"></i>
+                                        </div>
+                                        <div class="amount-content">
+                                            <div class="current">Status</div>
+                                            <div class="amount">${auction.status}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="countdown-area">
+                                    <div class="countdown">
+                                        <div id="bid_counter${auction.auctionId}"></div>
+                                    </div>
+                                    <span class="total-bids">${auction.totalBids} Bids</span>
+                                </div>
+                                <div class="text-center">
+                                    <a href="#0" class="custom-button">Submit a bid</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+    
+                auctionContainer.innerHTML += auctionItem; // Append the auction item to the container
+            });
         }
-
-
     </script>
+    
 
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
