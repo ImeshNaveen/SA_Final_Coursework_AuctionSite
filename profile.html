@@ -218,15 +218,15 @@
                                 <ul class="dash-pro-body">
                                     <li>
                                         <div class="info-name">Name</div>
-                                        <div class="info-value"></div>
+                                        <div class="info-value" id="u-name">NULL</div>
                                     </li>
                                     <li>
                                         <div class="info-name">Email</div>
-                                        <div class="info-value" id="u-email"></div>
+                                        <div class="info-value" id="u-email">NULL</div>
                                     </li>
                                     <li>
                                         <div class="info-name">Mobile</div>
-                                        <div class="info-value" id="u-email"></div>
+                                        <div class="info-value" id="u-mobile">NULL</div>
                                     </li>
                                 </ul>
                             </div>
@@ -384,26 +384,48 @@
     </footer>
     <!--============= Footer Section Ends Here =============-->
 
+    <div id="my-auction" class="col-lg-8">
+        <!-- Container for auction details -->
+    </div>
+    
     <script>
-        // Fetch data from the API
-        fetch('https://localhost:7159/manage/info', {  // Replace with your API URL
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer your_token_here`  // Replace with your actual token if needed
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch auction data from the backend API
+            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored here
+    
+            if (!token) {
+                console.error('No JWT token found. Please log in first.');
+                return; // Exit the function if no token is available
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Extract the email from the JSON response
-            const email = data.email;
-            // Display the email in the frontend
-            document.getElementById('u-email').textContent = email;
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
+    
+            fetch("https://localhost:7159/api/Auction/user-auctions", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`, // Use backticks for template literals
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json(); // Parse the response data as JSON
+            })
+            .then(auctions => {
+               
+    
+                // Update HTML with user details
+                document.getElementById('u-name').textContent = user-auction.userName; // Assuming the name property exists
+                document.getElementById('u-email').textContent = user-auction.email; // Assuming the email property exists
+                document.getElementById('u-mobile').textContent = user-auction.phoneNumber; // Assuming the mobile property exists
+            })
+            .catch(error => {
+                console.error('Error fetching auctions:', error);
+            });
         });
     </script>
+    
+    
 
 
 
