@@ -732,8 +732,8 @@
                                                 <i class="flaticon-auction"></i>
                                             </div>
                                             <div class="amount-content">
-                                                <div class="current">Current Bid</div>
-                                                <div class="amount">${auction.currentBid}</div>
+                                                <div class="current">Starting Price</div>
+                                                <div class="amount">${auction.startingBid}</div>
                                             </div>
                                         </div>
                                         <div class="bid-amount">
@@ -741,19 +741,14 @@
                                                 <i class="flaticon-money"></i>
                                             </div>
                                             <div class="amount-content">
-                                                <div class="current">Buy Now</div>
-                                                <div class="amount">${auction.buyNowPrice}</div>
+                                                <div class="current">Category</div>
+                                                <div class="amount">${auction.auctionCategory}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="countdown-area">
-                                        <div class="countdown">
-                                            <div id="bid_counter${auction.auctionId}"></div>
-                                        </div>
-                                        <span class="total-bids">${auction.totalBids} Bids</span>
-                                    </div>
+                                    <br>
                                     <div class="text-center">
-                                        <a href="#0" class="custom-button">Submit a bid</a>
+                                        <a href="./product-details.html?auctionId=${auction.auctionId}" class="custom-button">Submit a bid</a>
                                     </div>
                                 </div>
                             </div>
