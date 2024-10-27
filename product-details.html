@@ -195,6 +195,10 @@
                                 <h5 class="current">Starting Price</h5>
                                 <h3 class="price" id="start-price" >US $700.00</h3>
                             </li>
+                            <li class="header">
+                                <h5 class="current">Last Bid</h5>
+                                <h3 class="price" id="last-bid" >US $700.00</h3>
+                            </li>
                             <li>
                                 <span class="details">Buyer's Premium</span>
                                 <h5 class="info">10.00%</h5>
@@ -800,77 +804,88 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored in localStorage
+            const token = localStorage.getItem('jwtToken');
     
             if (!token) {
                 console.error('No JWT token found. Please log in first.');
-                return; // Exit if no token is available
+                return;
             }
     
-            // Get auctionId from URL
             const urlParams = new URLSearchParams(window.location.search);
             const auctionId = urlParams.get('auctionId');
     
             if (!auctionId) {
                 console.error('No auctionId found in the URL.');
-                return; // Exit if no auctionId is found
+                return;
             }
     
-            // Fetch auction details from the API
+            // Fetch auction details
             fetch(`https://localhost:7159/api/Auction/${auctionId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`  // Include the token for authentication
+                    'Authorization': `Bearer ${token}`
                 }
             })
             .then(response => response.json())
             .then(auctionData => {
-                // Populate the page with auction details
                 document.getElementById('auction-title').textContent = auctionData.title;
                 document.getElementById('auction-description').textContent = auctionData.description;
                 document.getElementById('auction-image').src = auctionData.auctionImage;
                 document.getElementById('start-price').textContent = auctionData.startingBid;
     
-                console.log('Auction details:', auctionData);
-    
-                // Handle the form submission for bidding
-                document.getElementById('bid-form').addEventListener('submit', function(event) {
-                    event.preventDefault();  // Prevent default form submission
-    
-                    const bidAmount = parseFloat(document.getElementById('bid-amount').value);
-    
-                    // Check if bidAmount is greater than the starting bid
-                    if (bidAmount <= auctionData.startingBid) {
-                        alert('Your bid must be greater than the starting bid of ' + auctionData.startingBid);
-                        return; // Exit if bid is too low
+                // Fetch and display the highest bid
+                fetch(`https://localhost:7159/api/Bid/highest?auctionId=${auctionId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
                     }
+                })
+                .then(response => response.json())
+                .then(highestBidData => {
+                    const highestBidAmount = highestBidData ? highestBidData.bidAmount : auctionData.startingBid;
+                    document.getElementById('last-bid').textContent = highestBidAmount;
     
-                    // Create the request data for bidding
-                    const requestData = {
-                        auctionId: parseInt(auctionId),  // Use the auctionId from URL
-                        status: "active",  // You can set status or modify based on your logic
-                        bidAmount: bidAmount  // Get the user's bid amount
-                    };
+                    // Handle form submission for bidding
+                    document.getElementById('bid-form').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        const bidAmount = parseFloat(document.getElementById('bid-amount').value);
     
-                    // Send the bid request to the API
-                    fetch('https://localhost:7159/api/Bid/create', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`  // Include the token for authentication
-                        },
-                        body: JSON.stringify(requestData)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Bid submitted successfully:', data);  // Handle the API response
-                        alert('Bid submitted successfully');
-
-                    })
-                    .catch(error => {
-                        console.error('Error submitting bid:', error);  // Handle any errors
+                        // Ensure bid is higher than the highest bid
+                        if (bidAmount <= highestBidAmount) {
+                            alert('Your bid must be greater than the last bid of ' + highestBidAmount);
+                            return;
+                        }
+    
+                        const requestData = {
+                            auctionId: parseInt(auctionId),
+                            status: "active",
+                            bidAmount: bidAmount
+                        };
+    
+                        fetch('https://localhost:7159/api/Bid/create', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(requestData)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Bid submitted successfully:', data);
+                            alert('Bid submitted successfully');
+                            // Update the highest bid amount after submission
+                            document.getElementById('last-bid').textContent = bidAmount;
+                        })
+                        .catch(error => {
+                            console.error('Error submitting bid:', error);
+                        });
                     });
+                })
+                .catch(error => {
+                    console.error('Error fetching highest bid:', error);
                 });
             })
             .catch(error => {
@@ -878,6 +893,7 @@
             });
         });
     </script>
+    
     
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./assets/js/jquery-3.3.1.min.js"></script>
