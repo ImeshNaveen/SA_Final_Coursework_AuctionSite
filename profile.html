@@ -198,14 +198,12 @@
                                 <a href="profile.html"><i class="flaticon-settings"></i>Personal Profile </a>
                             </li>
                             <li>
-                                <a href="my-bid.html"><i class="flaticon-auction"></i>My Bids</a>
+                                <a href="my-bid.html"><i class="flaticon-auction"></i>My Auctions</a>
                             </li>
                             <li>
                                 <a href="notifications.html"><i class="flaticon-alarm"></i>My Alerts</a>
                             </li>
-                            <li>
-                                <a href="my-favorites.html"><i class="flaticon-star"></i>My Favorites</a>
-                            </li>
+                           
                         </ul>
                     </div>
                 </div>
@@ -220,79 +218,15 @@
                                 <ul class="dash-pro-body">
                                     <li>
                                         <div class="info-name">Name</div>
-                                        <div class="info-value">Albert Owens</div>
+                                        <div class="info-value" id="u-name">NULL</div>
                                     </li>
-                                    <li>
-                                        <div class="info-name">Date of Birth</div>
-                                        <div class="info-value">15-03-1974</div>
-                                    </li>
-                                    <li>
-                                        <div class="info-name">Address</div>
-                                        <div class="info-value">8198 Fieldstone Dr.La Crosse, WI 54601</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="dash-pro-item mb-30 dashboard-widget">
-                                <div class="header">
-                                    <h4 class="title">Account Settings</h4>
-                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
-                                </div>
-                                <ul class="dash-pro-body">
-                                    <li>
-                                        <div class="info-name">Language</div>
-                                        <div class="info-value">English (United States)</div>
-                                    </li>
-                                    <li>
-                                        <div class="info-name">Time Zone</div>
-                                        <div class="info-value">(GMT-06:00) Central America</div>
-                                    </li>
-                                    <li>
-                                        <div class="info-name">Status</div>
-                                        <div class="info-value"><i class="flaticon-check text-success"></i> Active</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="dash-pro-item mb-30 dashboard-widget">
-                                <div class="header">
-                                    <h4 class="title">Email Address</h4>
-                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
-                                </div>
-                                <ul class="dash-pro-body">
                                     <li>
                                         <div class="info-name">Email</div>
-                                        <div class="info-value" id="u-email"></div>
+                                        <div class="info-value" id="u-email">NULL</div>
                                     </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="dash-pro-item mb-30 dashboard-widget">
-                                <div class="header">
-                                    <h4 class="title">Phone</h4>
-                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
-                                </div>
-                                <ul class="dash-pro-body">
                                     <li>
                                         <div class="info-name">Mobile</div>
-                                        <div class="info-value">+1 234-567-8925</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="dash-pro-item dashboard-widget">
-                                <div class="header">
-                                    <h4 class="title">Security</h4>
-                                    <span class="edit"><i class="flaticon-edit"></i> Edit</span>
-                                </div>
-                                <ul class="dash-pro-body">
-                                    <li>
-                                        <div class="info-name">Password</div>
-                                        <div class="info-value">xxxxxxxxxxxxxxxx</div>
+                                        <div class="info-value" id="u-mobile">NULL</div>
                                     </li>
                                 </ul>
                             </div>
@@ -358,7 +292,7 @@
                                     <a href="#0">A T Madhusanka - 28609</a>
                                 </li>
                                 <li>
-                                    <a href="#0">Rakidu modaya - පුෂ්පෙ</a>
+                                    <a href="#0">U A D R Sandaruwan - 28625</a>
                                 </li>
                             </ul>
                         </div>
@@ -450,26 +384,48 @@
     </footer>
     <!--============= Footer Section Ends Here =============-->
 
+    <div id="my-auction" class="col-lg-8">
+        <!-- Container for auction details -->
+    </div>
+    
     <script>
-        // Fetch data from the API
-        fetch('https://localhost:7159/manage/info', {  // Replace with your API URL
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer your_token_here`  // Replace with your actual token if needed
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch auction data from the backend API
+            const token = localStorage.getItem('jwtToken'); // Assuming the token is stored here
+    
+            if (!token) {
+                console.error('No JWT token found. Please log in first.');
+                return; // Exit the function if no token is available
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Extract the email from the JSON response
-            const email = data.email;
-            // Display the email in the frontend
-            document.getElementById('u-email').textContent = email;
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
+    
+            fetch("https://localhost:7159/api/Auction/user-auctions", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`, // Use backticks for template literals
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json(); // Parse the response data as JSON
+            })
+            .then(auctions => {
+               
+    
+                // Update HTML with user details
+                document.getElementById('u-name').textContent = user-auction.userName; // Assuming the name property exists
+                document.getElementById('u-email').textContent = user-auction.email; // Assuming the email property exists
+                document.getElementById('u-mobile').textContent = user-auction.phoneNumber; // Assuming the mobile property exists
+            })
+            .catch(error => {
+                console.error('Error fetching auctions:', error);
+            });
         });
     </script>
+    
+    
 
 
 
